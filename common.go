@@ -44,8 +44,8 @@ func MiddlewareError(r *ghttp.Request) {
 }
 
 // AuthBase 鉴权中间件，只有前端或者后端登录成功之后才能通过
-func AuthBase(r *ghttp.Request) {
-	info := r.Session.Get("admin", nil)
+func AuthBase(r *ghttp.Request, name string) {
+	info := r.Session.Get(name, nil)
 	if info != nil {
 		r.Middleware.Next()
 	} else {
