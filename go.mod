@@ -1,4 +1,4 @@
-module common
+module github.com/black1552/common
 
 go 1.15
 
