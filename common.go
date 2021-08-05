@@ -6,8 +6,10 @@ import (
 	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/os/gcron"
+	"github.com/gogf/gf/os/gsession"
 	"github.com/gogf/gf/text/gstr"
 	"net/http"
+	"time"
 
 	"github.com/gogf/gf/net/ghttp"
 )
@@ -128,4 +130,11 @@ func GetResult(url string, data g.Map) *http.Response {
 		panic(err.Error())
 	}
 	return result.Response
+}
+
+func SetSession(time time.Time) g.Map {
+	return g.Map{
+		"SessionMaxAge":  time,
+		"SessionStorage": gsession.NewStorageMemory(),
+	}
 }
