@@ -54,9 +54,9 @@ func AuthBase(r *ghttp.Request) {
 	}
 }
 
-// GetCapitalPass 获取大写的短信密码
-func GetCapitalPass() string {
-	md5, err := gmd5.Encrypt(g.Cfg().Get("base.pass"))
+// GetCapitalPass MD5化并转换为大写
+func GetCapitalPass(val string) string {
+	md5, err := gmd5.Encrypt(val)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -129,4 +129,3 @@ func GetResult(url string, data g.Map) *http.Response {
 	}
 	return result.Response
 }
-
