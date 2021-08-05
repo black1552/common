@@ -9,7 +9,7 @@ import (
 )
 
 // Start 创建无定时的http
-func Start(upload, root string, time time.Time) {
+func Start(upload, root string, time time.Duration) {
 	s := g.Server()
 	s.SetServerRoot(root)
 	if !isDir(upload) {
@@ -26,7 +26,7 @@ func Start(upload, root string, time time.Time) {
 }
 
 // StartCorn 创建有定时任务的http
-func StartCorn(upload, root string, time time.Time, cronTime, name string, cron func()) {
+func StartCorn(upload, root string, time time.Duration, cronTime, name string, cron func()) {
 	s := g.Server()
 	s.SetServerRoot(root)
 	if !isDir(upload) {
