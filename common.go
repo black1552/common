@@ -101,9 +101,9 @@ func RemoveCron(name string) {
 }
 
 // PostResult 建立POST请求并返回结果
-func PostResult(url string, data g.Map, header string, class string, va *gvar.Var) (*gvar.Var, error) {
+func PostResult(url string, data g.Map, header string, class string) (string, error) {
 	if url == "" {
-		return va, gerror.New("请求地址不可为空")
+		return "", gerror.New("请求地址不可为空")
 	}
 	client := g.Client()
 	if header != "" {
@@ -116,21 +116,21 @@ func PostResult(url string, data g.Map, header string, class string, va *gvar.Va
 		client = client.ContentXml()
 	default:
 	}
-	err := client.PostVar(url, data).Scan(&va)
+	result, err := client.Post(url, data)
 	if err != nil {
-		return va, err
+		return "", err
 	}
-	return va, nil
+	return result.ReadAllString(), nil
 }
 
-func GetResult(url string, data g.Map, va *gvar.Var) (*gvar.Var, error) {
+func GetResult(url string, data g.Map, va *gvar.Var) (string, error) {
 	client := g.Client()
 	if url == "" {
-		return va, gerror.New("请求地址不可为空")
+		return "", gerror.New("请求地址不可为空")
 	}
-	err := client.GetVar(url, data).Scan(&va)
+	resutl, err := client.Get(url, data)
 	if err != nil {
-		return va, err
+		return "", err
 	}
-	return va, nil
+	return resutl.ReadAllString(), nil
 }
