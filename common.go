@@ -2,6 +2,7 @@ package common
 
 import (
 	"context"
+	"github.com/gogf/gf/container/gvar"
 	"github.com/gogf/gf/crypto/gmd5"
 	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/errors/gerror"
@@ -9,7 +10,6 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/os/gcron"
 	"github.com/gogf/gf/text/gstr"
-	"net/http"
 )
 
 type PageSize struct {
@@ -101,9 +101,9 @@ func RemoveCron(name string) {
 }
 
 // PostResult 建立POST请求并返回结果
-func PostResult(url string, data g.Map, header string, class string) (string, error) {
+func PostResult(url string, data g.Map, header string, class string, va gvar.Var) (gvar.Var, error) {
 	if url == "" {
-		return "", gerror.New("请求地址不可为空")
+		return va, gerror.New("请求地址不可为空")
 	}
 	client := g.Client()
 	if header != "" {
@@ -116,21 +116,21 @@ func PostResult(url string, data g.Map, header string, class string) (string, er
 		client = client.ContentXml()
 	default:
 	}
-	result, err := client.Post(url, data)
+	err := client.PostVar(url, data).Scan(&va)
 	if err != nil {
-		return "", err
+		return va, err
 	}
-	return result.ReadAllString(), nil
+	return va, nil
 }
 
-func GetResult(url string, data g.Map) *http.Response {
+func GetResult(url string, data g.Map, va gvar.Var) (gvar.Var, error) {
 	client := g.Client()
 	if url == "" {
-		panic("请求地址不可为空")
+		return va, gerror.New("请求地址不可为空")
 	}
-	result, err := client.Get(url, data)
+	err := client.GetVar(url, data).Scan(&va)
 	if err != nil {
-		panic(err.Error())
+		return va, err
 	}
-	return result.Response
+	return va, nil
 }
