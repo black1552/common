@@ -4,11 +4,11 @@ import (
 	"context"
 	"github.com/gogf/gf/crypto/gmd5"
 	"github.com/gogf/gf/database/gdb"
+	"github.com/gogf/gf/errors/gerror"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/os/gcron"
-	"github.com/gogf/gf/text/gstr"	
-	"github.com/gogf/gf/errors/gerror"
+	"github.com/gogf/gf/text/gstr"
 	"net/http"
 )
 
@@ -113,9 +113,9 @@ func PostResult(url string, data g.Map, header string, class string) (*http.Resp
 	}
 	result, err := client.Post(url, data)
 	if err != nil {
-		return nil,err.Error()
+		return nil, err
 	}
-	return result.Response,nil
+	return result.Response, nil
 }
 
 func GetResult(url string, data g.Map) *http.Response {
