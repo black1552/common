@@ -95,9 +95,9 @@ func RemoveCron(name string) {
 }
 
 // PostResult 建立POST请求并返回结果
-func PostResult(url string, data g.Map, header string, class string) *http.Response {
+func PostResult(url string, data g.Map, header string, class string) (*http.Response, error) {
 	if url == "" {
-		panic("请求地址不可为空")
+		return nil, gerror.New("请求地址不可为空")
 	}
 	client := g.Client()
 	if header != "" {
@@ -112,9 +112,9 @@ func PostResult(url string, data g.Map, header string, class string) *http.Respo
 	}
 	result, err := client.Post(url, data)
 	if err != nil {
-		panic(err.Error())
+		return nil,err.Error()
 	}
-	return result.Response
+	return result.Response,nil
 }
 
 func GetResult(url string, data g.Map) *http.Response {
