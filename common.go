@@ -84,8 +84,8 @@ func CreateCron(time string, name string, operate func()) {
 	}
 }
 
-// StartCron 开始指定的定时任
-func StartCron(name string) {
+// StartCrons 开始指定的定时任
+func StartCrons(name string) {
 	gcron.Start(name)
 }
 
