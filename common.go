@@ -101,7 +101,7 @@ func RemoveCron(name string) {
 }
 
 // PostResult 建立POST请求并返回结果
-func PostResult(url string, data g.Map, header string, class string, va gvar.Var) (gvar.Var, error) {
+func PostResult(url string, data g.Map, header string, class string, va *gvar.Var) (*gvar.Var, error) {
 	if url == "" {
 		return va, gerror.New("请求地址不可为空")
 	}
@@ -123,7 +123,7 @@ func PostResult(url string, data g.Map, header string, class string, va gvar.Var
 	return va, nil
 }
 
-func GetResult(url string, data g.Map, va gvar.Var) (gvar.Var, error) {
+func GetResult(url string, data g.Map, va *gvar.Var) (*gvar.Var, error) {
 	client := g.Client()
 	if url == "" {
 		return va, gerror.New("请求地址不可为空")
