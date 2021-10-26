@@ -76,7 +76,7 @@ func Transaction(function func() error) {
 
 // CreateCron 创建定时任务
 func CreateCron(time string, name string, operate func()) {
-	_, err := gcron.Add(time, func() {
+	_, err := gcron.AddSingleton(time, func() {
 		operate()
 	}, name)
 	if err != nil {
