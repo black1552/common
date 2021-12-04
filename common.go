@@ -65,8 +65,7 @@ func GetCapitalPass(val string) string {
 
 // Transaction 简单封装事务操作
 func Transaction(function func() error) {
-	db := gdb.TX{}
-	err := db.Transaction(context.TODO(), func(ctx context.Context, tx *gdb.TX) error {
+	err := g.DB().Transaction(context.TODO(), func(ctx context.Context, tx *gdb.TX) error {
 		return function()
 	})
 	if err != nil {
