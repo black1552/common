@@ -37,6 +37,7 @@ func SetPage(page, limit, total int, data interface{}) *PageSize {
 
 // MiddlewareError 异常处理中间件
 func MiddlewareError(r *ghttp.Request) {
+	r.Response.CORSDefault()
 	r.Middleware.Next()
 	if err := r.GetError(); err != nil {
 		r.Response.ClearBuffer()
@@ -46,6 +47,7 @@ func MiddlewareError(r *ghttp.Request) {
 
 // AuthBase 鉴权中间件，只有前端或者后端登录成功之后才能通过
 func AuthBase(r *ghttp.Request, name string) {
+	r.Response.CORSDefault()
 	info := r.Session.Get(name, nil)
 	if info != nil {
 		r.Middleware.Next()
