@@ -52,9 +52,13 @@ func AuthBase(r *ghttp.Request, name string) {
 	if info != nil {
 		r.Middleware.Next()
 	} else {
-		r.Response.Status = 401
-		r.Response.Write("请登录后操作")
+		NoLogin(r)
 	}
+}
+
+func NoLogin(r *ghttp.Request) {
+	r.Response.Status = 401
+	r.Response.Write("请登录后操作")
 }
 
 // GetCapitalPass MD5化并转换为大写
