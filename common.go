@@ -41,7 +41,7 @@ func MiddlewareError(r *ghttp.Request) {
 	r.Middleware.Next()
 	if err := r.GetError(); err != nil {
 		r.Response.ClearBuffer()
-		Error(r).SetMsg(err.Error()).End()
+		r.Response.Write(err.Error())
 	}
 }
 
@@ -52,7 +52,8 @@ func AuthBase(r *ghttp.Request, name string) {
 	if info != nil {
 		r.Middleware.Next()
 	} else {
-		ErrorsLogin(r)
+		r.Response.Status = 401
+		r.Response.Write("请登录后操作")
 	}
 }
 
