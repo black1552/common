@@ -41,6 +41,7 @@ func MiddlewareError(r *ghttp.Request) {
 	r.Middleware.Next()
 	if err := r.GetError(); err != nil {
 		r.Response.ClearBuffer()
+		r.Response.Status = 200
 		r.Response.Write(err.Error())
 	}
 }
