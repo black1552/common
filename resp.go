@@ -3,6 +3,7 @@ package common
 import "github.com/gogf/gf/net/ghttp"
 
 type Json struct {
+	Code int         `json:"code"`
 	Data interface{} `json:"data"`
 	Msg  string      `json:"msg"`
 }
@@ -15,6 +16,12 @@ type ApiResp struct {
 func ResultVersion(r *ghttp.Request, data interface{}) {
 	_ = r.Response.WriteJson(data)
 	r.Exit()
+}
+
+// SetCode 设置状态码
+func (a *ApiResp) SetCode(code int) *ApiResp {
+	a.json.Code = code
+	return a
 }
 
 // SetDate 设置数据
@@ -31,7 +38,21 @@ func (a *ApiResp) SetMsg(msg string) *ApiResp {
 
 // Success 设置成功JSON
 func Success(r *ghttp.Request) *ApiResp {
-	json := Json{}
+	json := Json{
+		Code: 1,
+	}
+	var a = ApiResp{
+		r:    r,
+		json: &json,
+	}
+	return &a
+}
+
+// Error 设置错误JSON
+func Error(r *ghttp.Request) *ApiResp {
+	json := Json{
+		Code: 0,
+	}
 	var a = ApiResp{
 		r:    r,
 		json: &json,
