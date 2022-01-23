@@ -62,5 +62,6 @@ func Error(r *ghttp.Request) *ApiResp {
 
 // End 返回JSON
 func (a *ApiResp) End() {
+	a.r.Response.Status = 200
 	_ = a.r.Response.WriteJsonExit(a.json)
 }
